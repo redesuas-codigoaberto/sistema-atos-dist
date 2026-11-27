@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel dos atos do SUAS</title>
+  <link rel="icon" href="data:,">
+  <!-- O painel dos atos: src/ é juntado pelo esbuild em app.js e style.css (build.mjs); os dados são
+       acts.parquet e meta.json (pysistema/exports/painel.py), e o DuckDB-WASM vem de ../lib/duckdb/<versão>/. Os filtros são
+       o painel comum da consulta e do grafo (comum/filtros/). -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // O tema salvo (comum/tema.js, a mesma chave do grafo, do leitor e da consulta) ou o do sistema, antes de a
+    // página aparecer: sem isso, o claro pisca ao abrir.
+    try {
+      const t = localStorage.getItem("atos-snas-grafo:theme");
+      document.documentElement.dataset.theme = t || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    } catch {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#panels">Pular para o conteúdo</a>
+  <div class="proto-banner" role="note" style="flex: none; padding: 6px 14px; background: #b3261e; color: #fff; font: 700 13px/1.4 system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif; letter-spacing: 0.04em; text-align: center; position: relative; padding-right: 40px; padding-left: 40px;">PROTÓTIPO EM DESENVOLVIMENTO - NÃO USAR<button type="button" aria-label="Fechar o aviso" title="Fechar o aviso" onclick="this.parentNode.remove(); try { sessionStorage.setItem('atos-snas:proto-banner', '1'); } catch {} window.dispatchEvent(new Event('resize'));" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); padding: 0 6px; border: 0; background: none; color: inherit; font: 400 18px/1 system-ui, sans-serif; cursor: pointer;">×</button></div>
+  <!-- O aviso fechado fica fechado até o fim da sessão do navegador, em todas as páginas do site; no servidor local
+       (make serve) e no arquivo aberto do disco, ele já começa fechado. -->
+  <script>try { if (location.protocol === "file:" || /^(localhost|127\.\d+\.\d+\.\d+|\[::1\])$/.test(location.hostname)
+      || sessionStorage.getItem("atos-snas:proto-banner")) document.querySelector(".proto-banner").remove(); } catch {}</script>
+  <header>
+    <a id="home-link" class="button icon" href="../" title="Início: a página que apresenta a consulta, o leitor, o painel, o grafo e a busca" aria-label="Início">⌂</a>
+    <button id="toggle-filters" class="icon pane-toggle" title="Mostrar ou esconder os filtros (arraste a borda para mudar a largura)" aria-label="Filtros">☰</button>
+    <h1>Painel dos atos do SUAS</h1>
+    <nav id="tabs" role="tablist" aria-label="Abas do painel">
+      <button type="button" role="tab" id="tab-panorama" data-tab="panorama" aria-controls="panel-panorama" aria-selected="true">Panorama</button>
+      <button type="button" role="tab" id="tab-portarias" data-tab="portarias" aria-controls="panel-portarias" aria-selected="false" tabindex="-1">Portarias</button>
+      <button type="button" role="tab" id="tab-cit" data-tab="cit" aria-controls="panel-cit" aria-selected="false" tabindex="-1" title="Resoluções da Comissão Intergestores Tripartite">CIT</button>
+      <button type="button" role="tab" id="tab-cnas" data-tab="cnas" aria-controls="panel-cnas" aria-selected="false" tabindex="-1" title="Resoluções do Conselho Nacional de Assistência Social">CNAS</button>
+      <button type="button" role="tab" id="tab-certificacao" data-tab="certificacao" aria-controls="panel-certificacao" aria-selected="false" tabindex="-1" title="Certificação de entidades beneficentes de assistência social">CEBAS</button>
+      <button type="button" role="tab" id="tab-personalizado" data-tab="personalizado" aria-controls="panel-personalizado" aria-selected="false" tabindex="-1" title="Um diagrama de Sankey com as classificações à escolha: como os atos passam por duas delas (família, tema, vigência, palavra-chave…); e, sob ele, as posições de uma classificação ano a ano e uma tabela dinâmica">Personalizado</button>
+      <button type="button" role="tab" id="tab-sobre" data-tab="sobre" aria-controls="panel-sobre" aria-selected="false" tabindex="-1">Sobre os dados</button>
+    </nav>
+    <span class="spacer"></span>
+    <select id="presets" aria-label="Filtros salvos"></select>
+    <button id="share" title="Copiar a URL desta tela: a aba e os filtros">Compartilhar</button>
+    <a id="query-link" class="button" href="../consulta/" title="Abrir os atos que passam nos filtros atuais na consulta: uma tabela, com colunas à escolha e CSV">Consulta</a>
+    <a id="reader-link" class="button" href="../leitor/" title="Abrir o leitor: o texto de cada ato, com a ficha e os atos ligados">Leitor</a>
+    <a id="graph-link" class="button" href="../grafo/" title="Abrir os filtros atuais no grafo: os atos e as ligações entre eles">Grafo</a>
+    <a id="fts-link" class="button" href="../busca/" title="Buscar palavras e frases no texto integral dos atos, com os filtros atuais">Busca integral</a>
+    <button id="theme-btn" class="icon" title="Tema escuro" aria-label="Tema escuro">☾</button>
+    <button id="help-btn" class="icon" title="Ajuda: como usar esta página" aria-label="Ajuda">?</button>
+  </header>
+
+  <main id="main">
+    <!-- O painel de filtros vem de comum/filtros/filtros.js (panelHtml), o mesmo da consulta e do grafo. -->
+    <aside id="filters" aria-label="Filtros"></aside>
+    <div class="resizer" data-resize="filters" title="Arraste para mudar a largura; duplo clique volta ao padrão"></div>
+    <div id="panels">
+      <div id="active-filters" hidden></div>
+      <div id="panel-panorama" class="panel" role="tabpanel" aria-labelledby="tab-panorama"></div>
+      <div id="panel-portarias" class="panel" role="tabpanel" aria-labelledby="tab-portarias" hidden></div>
+      <div id="panel-cit" class="panel" role="tabpanel" aria-labelledby="tab-cit" hidden></div>
+      <div id="panel-cnas" class="panel" role="tabpanel" aria-labelledby="tab-cnas" hidden></div>
+      <div id="panel-certificacao" class="panel" role="tabpanel" aria-labelledby="tab-certificacao" hidden></div>
+      <div id="panel-personalizado" class="panel" role="tabpanel" aria-labelledby="tab-personalizado" hidden></div>
+      <div id="panel-sobre" class="panel" role="tabpanel" aria-labelledby="tab-sobre" hidden></div>
+    </div>
+    <div id="loading"><div class="spinner"></div><p id="loading-status" role="status">Carregando…</p></div>
+  </main>
+
+  <div id="help" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="help-title">
+      <button class="icon close" data-close title="Fechar" aria-label="Fechar">×</button>
+      <h2 id="help-title">Como usar o painel</h2>
+      <p>As contagens dos atos de <code>dados/</code> publicados de 2004 em diante que passam nos filtros da esquerda, os
+        mesmos da consulta, do grafo e da busca integral.</p>
+      <ul>
+        <li><b>Abas</b>: o <b>Panorama</b>, com todos os atos; <b>Portarias</b>, <b>CIT</b>, <b>CNAS</b> e <b>CEBAS</b>,
+          cada uma com os blocos da sua família ou do seu tema; <b>Personalizado</b>, com as classificações à escolha; e
+          <b>Sobre os dados</b>, com as fontes, as lacunas do arquivo e como ler cada gráfico. As setas do teclado passam
+          de uma aba a outra.</li>
+        <li><b>Cada bloco</b> traz a frase com o que os números mostram, o gráfico e, embaixo, uma nota sobre como ele conta.</li>
+        <li><b>Passe o mouse</b> sobre o gráfico para ver os números de uma barra, um ponto ou uma célula; na maioria dos
+          gráficos, o <b>clique</b> abre os atos dela na consulta.</li>
+        <li><b>Ver como tabela</b>: a mesma informação em tabela. Clique no título de uma coluna para ordenar por ela; os
+          números sublinhados levam aos atos na consulta.</li>
+        <li><b>Lacunas</b>: faltam no arquivo do DOU partes de 2015 e 2017, marcadas com <b>†</b> nas tabelas e com borda
+          amarela no calendário; o <b>*</b> marca o último ano, ainda incompleto. As médias e o ano com mais atos contam só
+          os anos completos.</li>
+        <li><b>Personalizado</b>: escolha as colunas do diagrama de Sankey (família, tema, vigência, palavra-chave…);
+          <b>⇄</b> inverte as colunas, e <b>Até</b> diz quantos itens cada coluna mostra antes de juntar o resto. Abaixo,
+          as posições de uma classificação ano a ano e a tabela dinâmica.</li>
+        <li><b>Números nas listas de filtros</b>: quantos atos cada item teria com os outros filtros como estão. O
+          período começa em 2018; para os anos anteriores, arraste a alça da esquerda ou digite o ano inicial.</li>
+        <li><b>Filtros salvos</b> (no alto): os mesmos da consulta e do grafo, neste navegador. <b>Compartilhar</b> copia a
+          URL, com a aba e os filtros; <b>Consulta</b>, <b>Grafo</b> e <b>Busca integral</b> abrem os mesmos filtros nas
+          outras páginas.</li>
+        <li><b>☰</b> (no alto) esconde os filtros; arraste a borda deles para mudar a largura (duplo clique volta ao padrão).</li>
+      </ul>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

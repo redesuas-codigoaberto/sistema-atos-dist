@@ -1,0 +1,1433 @@
+{
+ "generated": "2026-11-27",
+ "firstYear": 2004,
+ "counts": {
+  "dados": 31854,
+  "acts": 31024,
+  "undated": 2,
+  "before": 830,
+  "beforeUndated": 58
+ },
+ "names": [
+  {
+   "nivel": "ministerio",
+   "impresso": "Ministério da Assistência Social",
+   "normalizado": "Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+   "motivo": "nome do ministério",
+   "desde": "",
+   "ate": "2004-02-02",
+   "sigla": "MAS",
+   "pai": ""
+  },
+  {
+   "nivel": "ministerio",
+   "impresso": "Ministério do Desenvolvimento Social e Combate à Fome",
+   "normalizado": "Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+   "motivo": "nome do ministério",
+   "desde": "2004-02-04",
+   "ate": "2016-05-13",
+   "sigla": "MDS",
+   "pai": ""
+  },
+  {
+   "nivel": "ministerio",
+   "impresso": "Ministério do Desenvolvimento Social e Agrário",
+   "normalizado": "Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+   "motivo": "nome do ministério",
+   "desde": "2016-05-16",
+   "ate": "2017-07-13",
+   "sigla": "MDSA",
+   "pai": ""
+  },
+  {
+   "nivel": "ministerio",
+   "impresso": "Ministério do Desenvolvimento Social",
+   "normalizado": "Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+   "motivo": "nome do ministério",
+   "desde": "2017-07-14",
+   "ate": "2019-01-02",
+   "sigla": "MDS",
+   "pai": ""
+  },
+  {
+   "nivel": "ministerio",
+   "impresso": "Ministério da Cidadania",
+   "normalizado": "Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+   "motivo": "nome do ministério",
+   "desde": "2019-01-03",
+   "ate": "2023-01-24",
+   "sigla": "MC",
+   "pai": ""
+  },
+  {
+   "nivel": "ministerio",
+   "impresso": "Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+   "normalizado": "Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+   "motivo": "",
+   "desde": "2023-01-03",
+   "ate": "",
+   "sigla": "MDS",
+   "pai": ""
+  },
+  {
+   "nivel": "ministerio",
+   "impresso": "Presidência da República",
+   "normalizado": "Presidência da República",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "PR",
+   "pai": ""
+  },
+  {
+   "nivel": "ministerio",
+   "impresso": "Conselho Nacional de Assistência Social",
+   "normalizado": "Conselho Nacional de Assistência Social",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "CNAS",
+   "pai": ""
+  },
+  {
+   "nivel": "ministerio",
+   "impresso": "Comissão Intergestores Tripartite",
+   "normalizado": "Comissão Intergestores Tripartite",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "CIT",
+   "pai": ""
+  },
+  {
+   "nivel": "ministerio",
+   "impresso": "Tribunal de Contas da União",
+   "normalizado": "Tribunal de Contas da União",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "TCU",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Diretoria-Executiva do Fundo Nacional de Assistência Social",
+   "normalizado": "Diretoria-Executiva do Fundo Nacional de Assistência Social",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Diretoria Executiva do Fundo Nacional de Assistência Social",
+   "normalizado": "Diretoria-Executiva do Fundo Nacional de Assistência Social",
+   "motivo": "grafia",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Departamento de Gestão do Fundo Nacional de Assistência Social",
+   "normalizado": "Diretoria-Executiva do Fundo Nacional de Assistência Social",
+   "motivo": "sucessão",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Diretoria Executiva",
+   "normalizado": "Diretoria-Executiva do Fundo Nacional de Assistência Social",
+   "motivo": "nome curto",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": "Fundo Nacional de Assistência Social"
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Comissão Intergestores Tripartite",
+   "normalizado": "Comissão Intergestores Tripartite",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Comissão Intergestores Tripartite do Sistema Único de Assistência Social",
+   "normalizado": "Comissão Intergestores Tripartite",
+   "motivo": "grafia",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Despacho do Ministro",
+   "normalizado": "Despacho do Ministro",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Despachos do Ministro",
+   "normalizado": "Despacho do Ministro",
+   "motivo": "grafia",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Subsecretaria de Planejamento, Orçamento e Administração",
+   "normalizado": "Subsecretaria de Planejamento, Orçamento e Administração",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Subsecretaria de Planejamento Orçamento e Administração",
+   "normalizado": "Subsecretaria de Planejamento, Orçamento e Administração",
+   "motivo": "grafia",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Gabinete do Ministro",
+   "normalizado": "Gabinete do Ministro",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Gabinete da Ministra",
+   "normalizado": "Gabinete do Ministro",
+   "motivo": "sucessão",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Gabinete",
+   "normalizado": "Gabinete da Secretaria Nacional de Promoção do Desenvolvimento Humano",
+   "motivo": "nome curto",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": "Secretaria Nacional de Promoção do Desenvolvimento Humano"
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Gabinete",
+   "normalizado": "Gabinete da Secretaria Nacional de Renda de Cidadania",
+   "motivo": "nome curto",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": "Secretaria Nacional de Renda de Cidadania"
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria Nacional de Assistência Social",
+   "normalizado": "Secretaria Nacional de Assistência Social",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria de Políticas de Assistência Social",
+   "normalizado": "Secretaria Nacional de Assistência Social",
+   "motivo": "sucessão",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Assessoria Especial de Assuntos Internacionais",
+   "normalizado": "Assessoria Especial de Assuntos Internacionais",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Conselho Nacional de Assistência Social",
+   "normalizado": "Conselho Nacional de Assistência Social",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação de Análise de Prestação de Contas de Repasse Fundo a Fundo",
+   "normalizado": "Coordenação de Análise de Prestação de Contas de Repasse Fundo a Fundo",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação de Gestão de Convênios e Contratos",
+   "normalizado": "Coordenação de Gestão de Convênios e Contratos",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Assuntos Administrativos",
+   "normalizado": "Coordenação-Geral de Assuntos Administrativos",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Certificação das Entidades Beneficentes de Assistência Social",
+   "normalizado": "Coordenação-Geral de Certificação das Entidades Beneficentes de Assistência Social",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Cooperação Técnica",
+   "normalizado": "Coordenação-Geral de Cooperação Técnica",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Execução Orçamentária e Financeira",
+   "normalizado": "Coordenação-Geral de Execução Orçamentária e Financeira",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Execução Orçamentária e Financeira do FNAS",
+   "normalizado": "Coordenação-Geral de Execução Orçamentária e Financeira do FNAS",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Gestão de Convênios e Contratos",
+   "normalizado": "Coordenação-Geral de Gestão de Convênios e Contratos",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Gestão de Pessoas",
+   "normalizado": "Coordenação-Geral de Gestão de Pessoas",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Gestão de Transferências Voluntárias",
+   "normalizado": "Coordenação-Geral de Gestão de Transferências Voluntárias",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Licitações e Contratos",
+   "normalizado": "Coordenação-Geral de Licitações e Contratos",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Logística e Administração",
+   "normalizado": "Coordenação-Geral de Logística e Administração",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Orçamento e Finanças",
+   "normalizado": "Coordenação-Geral de Orçamento e Finanças",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Prestação de Contas",
+   "normalizado": "Coordenação-Geral de Prestação de Contas",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Recursos",
+   "normalizado": "Coordenação-Geral de Recursos",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral de Serviços Gerais",
+   "normalizado": "Coordenação-Geral de Serviços Gerais",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Coordenação-Geral do Fundo Nacional de Assistência Social",
+   "normalizado": "Coordenação-Geral do Fundo Nacional de Assistência Social",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Câmara Interministerial de Segurança Alimentar e Nutricional",
+   "normalizado": "Câmara Interministerial de Segurança Alimentar e Nutricional",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Departamento da Rede Socioassistencial Privada do Sistema Único de Assistência Social",
+   "normalizado": "Departamento da Rede Socioassistencial Privada do Sistema Único de Assistência Social",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Departamento de Entidades de Apoio e Acolhimento Atuantes em Álcool e Drogas",
+   "normalizado": "Departamento de Entidades de Apoio e Acolhimento Atuantes em Álcool e Drogas",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Departamento de Promoção de Sistemas Descentralizados",
+   "normalizado": "Departamento de Promoção de Sistemas Descentralizados",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Departamento de Resolução de Auxílios Descontinuados e Apoio à Rede Federal de Fiscalização do PBF e CadÚnico",
+   "normalizado": "Departamento de Resolução de Auxílios Descontinuados e Apoio à Rede Federal de Fiscalização do PBF e CadÚnico",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Diretoria de Programas",
+   "normalizado": "Diretoria de Programas",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Diretoria de Projetos Internacionais",
+   "normalizado": "Diretoria de Projetos Internacionais",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Diretoria de Transferências do Esporte e do Desenvolvimento Social",
+   "normalizado": "Diretoria de Transferências do Esporte e do Desenvolvimento Social",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Diretoria Executiva",
+   "normalizado": "Diretoria Executiva",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Fundo Nacional de Assistência Social",
+   "normalizado": "Fundo Nacional de Assistência Social",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Gabinete da SENAPI",
+   "normalizado": "Gabinete da SENAPI",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Gerência Executiva - B - Uberaba",
+   "normalizado": "Gerência Executiva - B - Uberaba",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Grupo Gestor do Programa de Aquisição de Alimentos",
+   "normalizado": "Grupo Gestor do Programa de Aquisição de Alimentos",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Instituto Nacional do Seguro Social",
+   "normalizado": "Instituto Nacional do Seguro Social",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Plenário",
+   "normalizado": "Plenário",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Presidência",
+   "normalizado": "Presidência",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Resultados de Julgamentos",
+   "normalizado": "Resultados de Julgamentos",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria de Avaliação e Gestão da Informação",
+   "normalizado": "Secretaria de Avaliação e Gestão da Informação",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria de Avaliação, Gestão da Informação e Cadastro Único",
+   "normalizado": "Secretaria de Avaliação, Gestão da Informação e Cadastro Único",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria de Gestão de Fundos e Transferências",
+   "normalizado": "Secretaria de Gestão de Fundos e Transferências",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria Especial do Desenvolvimento Social",
+   "normalizado": "Secretaria Especial do Desenvolvimento Social",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria Executiva",
+   "normalizado": "Secretaria Executiva",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria Nacional de Atenção à Primeira Infância",
+   "normalizado": "Secretaria Nacional de Atenção à Primeira Infância",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria Nacional de Cuidados e Prevenção às Drogas",
+   "normalizado": "Secretaria Nacional de Cuidados e Prevenção às Drogas",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria Nacional de Inclusão Social e Produtiva",
+   "normalizado": "Secretaria Nacional de Inclusão Social e Produtiva",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria Nacional de Inclusão Social e Produtiva Rural",
+   "normalizado": "Secretaria Nacional de Inclusão Social e Produtiva Rural",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria Nacional de Promoção do Desenvolvimento Humano",
+   "normalizado": "Secretaria Nacional de Promoção do Desenvolvimento Humano",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria Nacional de Renda de Cidadania",
+   "normalizado": "Secretaria Nacional de Renda de Cidadania",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Secretaria Nacional de Segurança Alimentar e Nutricional",
+   "normalizado": "Secretaria Nacional de Segurança Alimentar e Nutricional",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Subcomissão de Habilitação",
+   "normalizado": "Subcomissão de Habilitação",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Subsecretaria de Assuntos Administrativos",
+   "normalizado": "Subsecretaria de Assuntos Administrativos",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  },
+  {
+   "nivel": "unidade",
+   "impresso": "Subsecretaria de Planejamento e Orçamento",
+   "normalizado": "Subsecretaria de Planejamento e Orçamento",
+   "motivo": "",
+   "desde": "",
+   "ate": "",
+   "sigla": "",
+   "pai": ""
+  }
+ ],
+ "palavrasChave": [
+  {
+   "name": "Abordagem social",
+   "filter": false
+  },
+  {
+   "name": "Acessuas Trabalho",
+   "filter": false
+  },
+  {
+   "name": "Acordo de cooperação técnica",
+   "filter": false
+  },
+  {
+   "name": "Afastamento do país",
+   "filter": false
+  },
+  {
+   "name": "Apoio técnico",
+   "filter": false
+  },
+  {
+   "name": "Aposentadoria e pensão",
+   "filter": false
+  },
+  {
+   "name": "Aquisição de equipamentos",
+   "filter": false
+  },
+  {
+   "name": "Aquisição de veículos",
+   "filter": false
+  },
+  {
+   "name": "Arquivamento de processo",
+   "filter": false
+  },
+  {
+   "name": "Auxílio Brasil",
+   "filter": false
+  },
+  {
+   "name": "Auxílio Emergencial",
+   "filter": false
+  },
+  {
+   "name": "Benefício de Prestação Continuada",
+   "filter": true
+  },
+  {
+   "name": "Benefícios eventuais",
+   "filter": true
+  },
+  {
+   "name": "Blocos de financiamento",
+   "filter": false
+  },
+  {
+   "name": "Bloqueio de recursos",
+   "filter": false
+  },
+  {
+   "name": "Bolsa Família",
+   "filter": true
+  },
+  {
+   "name": "BPC na Escola",
+   "filter": false
+  },
+  {
+   "name": "BPC Trabalho",
+   "filter": false
+  },
+  {
+   "name": "Brasil Sem Miséria",
+   "filter": false
+  },
+  {
+   "name": "Cadastro Único",
+   "filter": true
+  },
+  {
+   "name": "CadSUAS",
+   "filter": false
+  },
+  {
+   "name": "Calamidades e emergências",
+   "filter": true
+  },
+  {
+   "name": "Cancelamento da certificação",
+   "filter": false
+  },
+  {
+   "name": "Cargo em comissão",
+   "filter": false
+  },
+  {
+   "name": "CEBAS",
+   "filter": true
+  },
+  {
+   "name": "Censo SUAS",
+   "filter": false
+  },
+  {
+   "name": "Centro POP",
+   "filter": true
+  },
+  {
+   "name": "Centro-Dia",
+   "filter": true
+  },
+  {
+   "name": "Cessão e requisição de servidor",
+   "filter": false
+  },
+  {
+   "name": "Chamamento público",
+   "filter": false
+  },
+  {
+   "name": "Cofinanciamento federal",
+   "filter": true
+  },
+  {
+   "name": "Composição de colegiado",
+   "filter": false
+  },
+  {
+   "name": "Concessão da certificação",
+   "filter": false
+  },
+  {
+   "name": "Conferências de assistência social",
+   "filter": true
+  },
+  {
+   "name": "Conselhos de assistência social",
+   "filter": true
+  },
+  {
+   "name": "Construção e reforma",
+   "filter": false
+  },
+  {
+   "name": "Consultoria e organismos internacionais",
+   "filter": true
+  },
+  {
+   "name": "Convênio",
+   "filter": false
+  },
+  {
+   "name": "COVID-19",
+   "filter": false
+  },
+  {
+   "name": "CRAS",
+   "filter": true
+  },
+  {
+   "name": "CREAS",
+   "filter": true
+  },
+  {
+   "name": "Criança e adolescente",
+   "filter": true
+  },
+  {
+   "name": "Critérios de partilha",
+   "filter": false
+  },
+  {
+   "name": "Decisão judicial",
+   "filter": false
+  },
+  {
+   "name": "Delegação de competência",
+   "filter": false
+  },
+  {
+   "name": "Descentralização de crédito",
+   "filter": false
+  },
+  {
+   "name": "Designação",
+   "filter": false
+  },
+  {
+   "name": "Devolução de recursos",
+   "filter": false
+  },
+  {
+   "name": "Dispensa de função",
+   "filter": false
+  },
+  {
+   "name": "Dispensa e inexigibilidade",
+   "filter": false
+  },
+  {
+   "name": "Educação",
+   "filter": false
+  },
+  {
+   "name": "Eleição da sociedade civil",
+   "filter": true
+  },
+  {
+   "name": "Emendas parlamentares",
+   "filter": true
+  },
+  {
+   "name": "Equipes volantes",
+   "filter": false
+  },
+  {
+   "name": "Estruturação da rede",
+   "filter": false
+  },
+  {
+   "name": "Estágio probatório",
+   "filter": false
+  },
+  {
+   "name": "Exoneração",
+   "filter": false
+  },
+  {
+   "name": "Expansão de serviços",
+   "filter": false
+  },
+  {
+   "name": "Família acolhedora",
+   "filter": false
+  },
+  {
+   "name": "FNAS",
+   "filter": false
+  },
+  {
+   "name": "Fundos de assistência social",
+   "filter": false
+  },
+  {
+   "name": "Gestão do trabalho e educação permanente",
+   "filter": true
+  },
+  {
+   "name": "Grupo de trabalho e comitê",
+   "filter": false
+  },
+  {
+   "name": "IGD",
+   "filter": true
+  },
+  {
+   "name": "Inadimplência e CADIN",
+   "filter": false
+  },
+  {
+   "name": "Inclusão produtiva",
+   "filter": false
+  },
+  {
+   "name": "Inscrição em conselho de assistência social",
+   "filter": false
+  },
+  {
+   "name": "Instituição de longa permanência para idosos",
+   "filter": false
+  },
+  {
+   "name": "Isenção de contribuições",
+   "filter": false
+  },
+  {
+   "name": "Juventude",
+   "filter": false
+  },
+  {
+   "name": "Lanchas da assistência social",
+   "filter": false
+  },
+  {
+   "name": "Licenças e afastamentos",
+   "filter": false
+  },
+  {
+   "name": "Licitação e contratos",
+   "filter": true
+  },
+  {
+   "name": "LOAS",
+   "filter": true
+  },
+  {
+   "name": "Medidas socioeducativas",
+   "filter": true
+  },
+  {
+   "name": "Mesa diretora e presidência",
+   "filter": false
+  },
+  {
+   "name": "Migrantes e refugiados",
+   "filter": false
+  },
+  {
+   "name": "Mulheres",
+   "filter": false
+  },
+  {
+   "name": "NOB-RH/SUAS",
+   "filter": false
+  },
+  {
+   "name": "NOB-SUAS",
+   "filter": true
+  },
+  {
+   "name": "Nomeação",
+   "filter": false
+  },
+  {
+   "name": "Notificação",
+   "filter": false
+  },
+  {
+   "name": "Ordenador de despesa e gestor",
+   "filter": false
+  },
+  {
+   "name": "Orçamento e créditos",
+   "filter": true
+  },
+  {
+   "name": "Pacto de aprimoramento da gestão",
+   "filter": true
+  },
+  {
+   "name": "Pactuação na CIT",
+   "filter": true
+  },
+  {
+   "name": "PAEFI",
+   "filter": true
+  },
+  {
+   "name": "PAIF",
+   "filter": true
+  },
+  {
+   "name": "Penalidade a fornecedor",
+   "filter": false
+  },
+  {
+   "name": "Pessoa com deficiência",
+   "filter": true
+  },
+  {
+   "name": "Pessoa idosa",
+   "filter": true
+  },
+  {
+   "name": "Pisos de proteção",
+   "filter": false
+  },
+  {
+   "name": "Plano Decenal",
+   "filter": false
+  },
+  {
+   "name": "Planos de assistência social",
+   "filter": false
+  },
+  {
+   "name": "PNAS",
+   "filter": true
+  },
+  {
+   "name": "População em situação de rua",
+   "filter": true
+  },
+  {
+   "name": "Povos e comunidades tradicionais",
+   "filter": false
+  },
+  {
+   "name": "Prestação de contas",
+   "filter": true
+  },
+  {
+   "name": "Primeira infância",
+   "filter": true
+  },
+  {
+   "name": "Processo administrativo disciplinar",
+   "filter": false
+  },
+  {
+   "name": "Prontuário SUAS",
+   "filter": false
+  },
+  {
+   "name": "Prorrogação de vigência",
+   "filter": false
+  },
+  {
+   "name": "Proteção social básica",
+   "filter": true
+  },
+  {
+   "name": "Proteção social especial",
+   "filter": true
+  },
+  {
+   "name": "Recurso administrativo",
+   "filter": false
+  },
+  {
+   "name": "Rede socioassistencial privada",
+   "filter": true
+  },
+  {
+   "name": "Regimento interno",
+   "filter": false
+  },
+  {
+   "name": "Renda Mensal Vitalícia",
+   "filter": false
+  },
+  {
+   "name": "Renovação da certificação",
+   "filter": false
+  },
+  {
+   "name": "Reprogramação de saldos",
+   "filter": false
+  },
+  {
+   "name": "Residência inclusiva",
+   "filter": false
+  },
+  {
+   "name": "Reuniões do CNAS",
+   "filter": false
+  },
+  {
+   "name": "Saúde",
+   "filter": false
+  },
+  {
+   "name": "Segurança alimentar e nutricional",
+   "filter": true
+  },
+  {
+   "name": "Serviço de Convivência e Fortalecimento de Vínculos",
+   "filter": true
+  },
+  {
+   "name": "Serviços de acolhimento",
+   "filter": true
+  },
+  {
+   "name": "Substituição eventual",
+   "filter": false
+  },
+  {
+   "name": "Termo aditivo",
+   "filter": false
+  },
+  {
+   "name": "Termo de doação",
+   "filter": false
+  },
+  {
+   "name": "Termo de fomento e de colaboração",
+   "filter": false
+  },
+  {
+   "name": "Tipificação Nacional dos Serviços Socioassistenciais",
+   "filter": true
+  },
+  {
+   "name": "Tomada de contas especial",
+   "filter": true
+  },
+  {
+   "name": "Trabalho infantil",
+   "filter": true
+  },
+  {
+   "name": "Utilidade pública",
+   "filter": false
+  },
+  {
+   "name": "Vigilância socioassistencial",
+   "filter": true
+  },
+  {
+   "name": "Violência e violação de direitos",
+   "filter": true
+  },
+  {
+   "name": "Álcool e outras drogas",
+   "filter": false
+  }
+ ],
+ "orgs": [
+  {
+   "org": "Ministério do Desenvolvimento Social e Combate à Fome",
+   "count": 16736
+  },
+  {
+   "org": "Ministério da Cidadania",
+   "count": 4731
+  },
+  {
+   "org": "Presidência da República",
+   "count": 2936
+  },
+  {
+   "org": "Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+   "count": 2833
+  },
+  {
+   "org": "Ministério do Desenvolvimento Social",
+   "count": 2732
+  },
+  {
+   "org": "Ministério do Desenvolvimento Social e Agrário",
+   "count": 1657
+  },
+  {
+   "org": "Conselho Nacional de Assistência Social",
+   "count": 190
+  }
+ ],
+ "units": [
+  {
+   "unit": "Diretoria-Executiva do Fundo Nacional de Assistência Social",
+   "count": 9833
+  },
+  {
+   "unit": "Gabinete do Ministro",
+   "count": 7807
+  },
+  {
+   "unit": "Secretaria Nacional de Assistência Social",
+   "count": 4124
+  },
+  {
+   "unit": "Conselho Nacional de Assistência Social",
+   "count": 2369
+  },
+  {
+   "unit": "Secretaria Executiva",
+   "count": 1638
+  },
+  {
+   "unit": "Departamento da Rede Socioassistencial Privada do Sistema Único de Assistência Social",
+   "count": 1065
+  },
+  {
+   "unit": "Coordenação-Geral de Execução Orçamentária e Financeira do FNAS",
+   "count": 769
+  },
+  {
+   "unit": "Subsecretaria de Assuntos Administrativos",
+   "count": 553
+  },
+  {
+   "unit": "Comissão Intergestores Tripartite",
+   "count": 144
+  },
+  {
+   "unit": "Diretoria de Projetos Internacionais",
+   "count": 71
+  },
+  {
+   "unit": "Coordenação-Geral de Cooperação Técnica",
+   "count": 63
+  },
+  {
+   "unit": "Coordenação-Geral de Certificação das Entidades Beneficentes de Assistência Social",
+   "count": 58
+  },
+  {
+   "unit": "Fundo Nacional de Assistência Social",
+   "count": 48
+  },
+  {
+   "unit": "Coordenação-Geral de Gestão de Convênios e Contratos",
+   "count": 41
+  },
+  {
+   "unit": "Secretaria Nacional de Segurança Alimentar e Nutricional",
+   "count": 28
+  },
+  {
+   "unit": "Coordenação-Geral de Licitações e Contratos",
+   "count": 27
+  },
+  {
+   "unit": "Secretaria Nacional de Renda de Cidadania",
+   "count": 26
+  },
+  {
+   "unit": "Gabinete da Secretaria Nacional de Promoção do Desenvolvimento Humano",
+   "count": 22
+  },
+  {
+   "unit": "Coordenação de Gestão de Convênios e Contratos",
+   "count": 21
+  },
+  {
+   "unit": "Coordenação-Geral do Fundo Nacional de Assistência Social",
+   "count": 18
+  },
+  {
+   "unit": "Subsecretaria de Planejamento, Orçamento e Administração",
+   "count": 18
+  },
+  {
+   "unit": "Diretoria de Programas",
+   "count": 13
+  },
+  {
+   "unit": "Coordenação-Geral de Logística e Administração",
+   "count": 12
+  },
+  {
+   "unit": "Secretaria Nacional de Inclusão Social e Produtiva",
+   "count": 12
+  },
+  {
+   "unit": "Secretaria Nacional de Promoção do Desenvolvimento Humano",
+   "count": 12
+  },
+  {
+   "unit": "Secretaria de Avaliação, Gestão da Informação e Cadastro Único",
+   "count": 11
+  },
+  {
+   "unit": "Secretaria Nacional de Atenção à Primeira Infância",
+   "count": 10
+  }
+ ]
+}

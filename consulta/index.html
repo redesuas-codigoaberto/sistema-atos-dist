@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consulta dos atos do SUAS</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // O tema salvo (comum/tema.js, a mesma chave do grafo e do leitor) ou o do sistema, antes de a página
+    // aparecer: sem isso, o claro pisca ao abrir.
+    try {
+      const t = localStorage.getItem("atos-snas-grafo:theme");
+      document.documentElement.dataset.theme = t || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    } catch {}
+  </script>
+</head>
+<body>
+  <div class="proto-banner" role="note" style="flex: none; padding: 6px 14px; background: #b3261e; color: #fff; font: 700 13px/1.4 system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif; letter-spacing: 0.04em; text-align: center; position: relative; padding-right: 40px; padding-left: 40px;">PROTÓTIPO EM DESENVOLVIMENTO - NÃO USAR<button type="button" aria-label="Fechar o aviso" title="Fechar o aviso" onclick="this.parentNode.remove(); try { sessionStorage.setItem('atos-snas:proto-banner', '1'); } catch {} window.dispatchEvent(new Event('resize'));" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); padding: 0 6px; border: 0; background: none; color: inherit; font: 400 18px/1 system-ui, sans-serif; cursor: pointer;">×</button></div>
+  <!-- O aviso fechado fica fechado até o fim da sessão do navegador, em todas as páginas do site; no servidor local
+       (make serve) e no arquivo aberto do disco, ele já começa fechado. -->
+  <script>try { if (location.protocol === "file:" || /^(localhost|127\.\d+\.\d+\.\d+|\[::1\])$/.test(location.hostname)
+      || sessionStorage.getItem("atos-snas:proto-banner")) document.querySelector(".proto-banner").remove(); } catch {}</script>
+  <header>
+    <a id="home-link" class="button icon" href="../" title="Início: a página que apresenta a consulta, o leitor, o painel, o grafo e a busca" aria-label="Início">⌂</a>
+    <button id="toggle-filters" class="icon pane-toggle" title="Mostrar ou esconder os filtros (arraste a borda para mudar a largura)" aria-label="Filtros">☰</button>
+    <h1>Consulta dos atos do SUAS</h1>
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="Ir a um ato (ex.: 8742, CNAS 145/2004, família acolhedora)… ( / )" autocomplete="off" spellcheck="false">
+      <ul id="search-results" hidden></ul>
+    </div>
+    <select id="presets" aria-label="Filtros salvos"></select>
+    <button id="share" title="Copiar a URL desta tela: os filtros, a ordem, a página e as colunas">Compartilhar</button>
+    <a id="reader-link" class="button" href="../leitor/" title="Abrir o leitor: o texto de cada ato, com a ficha e os atos ligados">Leitor</a>
+    <a id="bi-link" class="button" href="../bi/" title="Abrir os filtros atuais no painel: contagens por período, família, tema e unidade">Painel</a>
+    <a id="graph-link" class="button" href="../grafo/" title="Abrir os filtros atuais no grafo: os atos e as ligações entre eles">Grafo</a>
+    <a id="fts-link" class="button" href="../busca/" title="Buscar palavras e frases no texto integral dos atos, com os filtros atuais">Busca integral</a>
+    <span id="stats"></span>
+    <button id="theme-btn" class="icon" title="Tema escuro" aria-label="Tema escuro">☾</button>
+    <button id="help-btn" class="icon" title="Ajuda: como usar esta página" aria-label="Ajuda">?</button>
+  </header>
+
+  <main>
+    <!-- O painel de filtros vem de comum/filtros/filtros.js (panelHtml), o mesmo do grafo, sem as seções de ligações. -->
+    <aside id="filters"></aside>
+    <div class="resizer" data-resize="filters" title="Arraste para mudar a largura; duplo clique volta ao padrão"></div>
+
+    <section id="results">
+      <div id="toolbar">
+        <b id="total"></b>
+        <div id="active-filters" hidden></div>
+        <span class="spacer"></span>
+        <details id="columns">
+          <summary class="button">Colunas</summary>
+          <div id="columns-menu"></div>
+        </details>
+        <label class="page-size">Por página
+          <select id="page-size">
+            <option>25</option><option selected>50</option><option>100</option><option>200</option>
+          </select>
+        </label>
+        <button id="csv" title="Baixar todos os atos filtrados, com todas as colunas, em CSV (separado por ponto e vírgula, para o Excel)">Baixar CSV</button>
+      </div>
+      <div id="notice" hidden></div>
+      <div id="table-wrap">
+        <table id="table">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+        <p id="empty" hidden>Nenhum ato passa nos filtros atuais.</p>
+      </div>
+      <nav id="pager"></nav>
+      <div id="loading"><div class="spinner"></div><p id="loading-status">Carregando…</p></div>
+    </section>
+  </main>
+
+  <div id="help" hidden>
+    <div class="dialog">
+      <button class="icon close" data-close title="Fechar">×</button>
+      <h2>Como usar</h2>
+      <p>Os atos de <code>dados/</code> que passam nos filtros da esquerda, em tabela. Os filtros são os mesmos do grafo, e a
+        URL também: <b>Grafo</b> abre os mesmos filtros no grafo, e o <b>Consulta</b> do grafo abre aqui.</p>
+      <ul>
+        <li><b>Clique no título de uma coluna</b> para ordenar por ela; outro clique inverte. O padrão é a data de publicação, da mais recente à mais antiga; com texto na busca, a relevância.</li>
+        <li><b>Clique numa linha</b> para ver o resumo inteiro, a ementa, as ligações e os CNPJs e processos; outro clique fecha.</li>
+        <li><b>Clique numa palavra-chave, num CNPJ ou num processo</b> para pô-lo no filtro (ou tirar).</li>
+        <li><b>Colunas</b>: escolha as que aparecem; a escolha fica neste navegador. As de ligações (Altera, Citado por…) dizem quantos atos; ordene por elas para achar os mais citados.</li>
+        <li><b>Baixar CSV</b>: todos os atos filtrados, não só a página, com todas as colunas e os links do leitor e das fontes (o DOU, o Portal da Legislação e normas.leg.br).</li>
+        <li><b>Busca simples (sem texto integral)</b> (nos filtros): palavras de qualquer coluna de texto (nome, título, família, tipo, subtipo, tema, palavras-chave, órgão, unidade, seção, origem, resumo e ementa), sem acentos; cada palavra digitada tem de começar uma palavra do ato (“refu” acha “refugiados”, “cras” não acha “democracia”). As achadas ficam destacadas nas colunas. A tabela ganha a coluna <b>#</b>, a primeira, com a posição de cada ato <b>por relevância</b>: primeiro os atos com as palavras no nome ou no título, depois na ementa ou no resumo, depois nas palavras-chave, por fim só no tipo, no tema, no órgão e nas outras classificações; no empate, o mais recente. É a ordem padrão com busca; um clique em “Data” ordena por data, e um clique em “#” volta.</li>
+        <li><b>Período</b>: começa em 2018; para os atos anteriores, arraste a alça da esquerda ou digite um ano inicial menor na caixa ao lado do título (Enter aplica, Esc desfaz).</li>
+        <li><b>Números nas listas de filtros</b>: quantos atos cada item teria com os outros filtros como estão.</li>
+        <li><b>Filtros salvos</b> (no alto): os mesmos do grafo, neste navegador. <b>Compartilhar</b> copia a URL, com os filtros, a ordem, a página e as colunas.</li>
+        <li>A busca do alto vai a um ato: se ele passa nos filtros, abre a página dele na tabela.</li>
+        <li><b>Busca integral</b> (no alto) procura palavras e frases no texto dos atos, com os filtros atuais; <b>Painel</b> mostra as contagens por período, família, tema e unidade, com os mesmos filtros; <b>Leitor</b> abre o texto dos atos; o <b>Ler</b> de cada linha leva direto ao ato, e o <b>Grafo</b> dela, ao ato no grafo.</li>
+      </ul>
+      <p>Diferente do grafo, a tabela lista todos os atos que passam nos filtros, também os sem ligações: o mínimo de ligações e
+        os tipos de ligação são só do grafo, e os atos de outros temas ligados aos escolhidos (o contexto em cinza) não entram.</p>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

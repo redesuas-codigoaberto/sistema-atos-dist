@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Busca no texto integral dos atos do SUAS</title>
+  <link rel="icon" href="data:,">
+  <!-- A busca no texto integral (busca/): src/ é juntado pelo esbuild em app.js e style.css (build.mjs); os dados são
+       os Parquet de pysistema/exports/busca.py, lidos pelo DuckDB-WASM (de ../lib/duckdb/<versão>/) só nas faixas de bytes
+       de que cada busca precisa. Os filtros são o painel comum da consulta, do grafo e do painel (comum/filtros/). -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // O tema salvo (comum/tema.js, a mesma chave das outras páginas) ou o do sistema, antes de a página aparecer.
+    try {
+      const t = localStorage.getItem("atos-snas-grafo:theme");
+      document.documentElement.dataset.theme = t || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    } catch {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#ft">Pular para a busca</a>
+  <div class="proto-banner" role="note" style="flex: none; padding: 6px 14px; background: #b3261e; color: #fff; font: 700 13px/1.4 system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif; letter-spacing: 0.04em; text-align: center; position: relative; padding-right: 40px; padding-left: 40px;">PROTÓTIPO EM DESENVOLVIMENTO - NÃO USAR<button type="button" aria-label="Fechar o aviso" title="Fechar o aviso" onclick="this.parentNode.remove(); try { sessionStorage.setItem('atos-snas:proto-banner', '1'); } catch {} window.dispatchEvent(new Event('resize'));" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); padding: 0 6px; border: 0; background: none; color: inherit; font: 400 18px/1 system-ui, sans-serif; cursor: pointer;">×</button></div>
+  <!-- O aviso fechado fica fechado até o fim da sessão do navegador, em todas as páginas do site; no servidor local
+       (make serve) e no arquivo aberto do disco, ele já começa fechado. -->
+  <script>try { if (location.protocol === "file:" || /^(localhost|127\.\d+\.\d+\.\d+|\[::1\])$/.test(location.hostname)
+      || sessionStorage.getItem("atos-snas:proto-banner")) document.querySelector(".proto-banner").remove(); } catch {}</script>
+  <header>
+    <a id="home-link" class="button icon" href="../" title="Início: a página que apresenta a consulta, o leitor, o painel, o grafo e a busca" aria-label="Início">⌂</a>
+    <button id="toggle-filters" class="icon pane-toggle" title="Mostrar ou esconder os filtros (arraste a borda para mudar a largura)" aria-label="Filtros">☰</button>
+    <h1>Busca no texto integral</h1>
+    <span class="spacer"></span>
+    <select id="presets" aria-label="Filtros salvos"></select>
+    <button id="share" title="Copiar a URL desta tela: a busca e os filtros">Compartilhar</button>
+    <a id="query-link" class="button" href="../consulta/" title="Abrir os atos que passam nos filtros atuais na consulta: uma tabela, com colunas à escolha e CSV">Consulta</a>
+    <a id="reader-link" class="button" href="../leitor/" title="Abrir o leitor: o texto de cada ato, com a ficha e os atos ligados">Leitor</a>
+    <a id="bi-link" class="button" href="../bi/" title="Abrir os filtros atuais no painel: contagens por período, família, tema e unidade">Painel</a>
+    <a id="graph-link" class="button" href="../grafo/" title="Abrir os filtros atuais no grafo: os atos e as ligações entre eles">Grafo</a>
+    <button id="theme-btn" class="icon" title="Tema escuro" aria-label="Tema escuro">☾</button>
+    <button id="help-btn" class="icon" title="Ajuda: como buscar" aria-label="Ajuda" aria-controls="ft-help">?</button>
+  </header>
+
+  <main id="main">
+    <!-- O painel de filtros vem de comum/filtros/filtros.js (panelHtml), o mesmo da consulta, do grafo e do painel. -->
+    <aside id="filters" aria-label="Filtros"></aside>
+    <div class="resizer" data-resize="filters" title="Arraste para mudar a largura; duplo clique volta ao padrão"></div>
+    <div id="panels">
+      <form id="ft-form" class="ft-bar" role="search">
+        <input id="ft" type="search" placeholder="Palavras do texto dos atos: lei orgânica, &quot;acolhimento institucional&quot;, refugi*, -revoga" autocomplete="off" spellcheck="false" aria-label="Buscar no texto integral dos atos" aria-describedby="ft-help-summary">
+        <button id="ft-submit" type="submit" class="active" aria-busy="false"><span class="label">Buscar</span></button>
+        <label class="ft-order">Ordem
+          <select id="ft-order" aria-label="Ordem dos resultados">
+            <option value="r">Relevância</option>
+            <option value="n">Mais recentes</option>
+            <option value="o">Mais antigos</option>
+          </select>
+        </label>
+      </form>
+      <details id="ft-help" class="ft-help">
+        <summary id="ft-help-summary">Como buscar</summary>
+        <ul>
+          <li><b>Palavras soltas</b>: o ato tem de ter todas, em qualquer lugar do texto; sem diferença de acentos e maiúsculas. <code>cadastro único</code>. A palavra de três letras ou mais acha também as que começam com ela: <code>venezuela</code> acha venezuelanos, <code>lei</code> acha leis. Para só a palavra inteira, ponha entre aspas: <code>"lei"</code>.</li>
+          <li><b>Frase</b>, entre aspas: as palavras em seguida. <code>"acolhimento institucional"</code>. Um termo com pontuação no meio também é frase: <code>COVID-19</code>, <code>8.742/1993</code>.</li>
+          <li><b>Começo de palavra na frase</b>, com asterisco: entre aspas as palavras são inteiras, e o asterisco faz de uma o começo de outras. <code>"serviço* socioassistencia*"</code> acha “serviços socioassistenciais” e “serviço socioassistencial”. Vale também para números: <code>8742*</code>.</li>
+          <li><b>Palavra qualquer</b>, com o asterisco sozinho: <code>proteção * especial</code> acha “proteção social especial”; dois asteriscos, duas palavras. As palavras soltas em seguida com um asterisco entre elas, antes ou depois viram uma frase: <code>proteção social *</code> acha “proteção social básica” e “proteção social especial”, com a palavra do asterisco destacada nos trechos. Entre aspas também vale: <code>"conselho nacional * assistência social"</code>.</li>
+          <li><b>Sem</b> uma palavra ou frase, com o sinal de menos: <code>cebas -indefere</code>.</li>
+          <li><b>Correção</b>: uma palavra que nenhum ato tem é trocada pela do texto dos atos que difere dela numa letra só, e a busca avisa (<code>venezuala</code> busca venezuela); com duas letras de diferença, a busca só sugere a outra. Uma palavra em até 20 atos, com uma parecida muito mais comum, também ganha a sugestão. Vale para palavras de cinco letras ou mais.</li>
+          <li><b>Ordem</b>: por relevância, primeiro os atos com as palavras soltas em seguida, como numa frase (<code>proteção social</code> põe antes os que têm “proteção social”), depois os com elas em qualquer lugar. Em cada grupo, na frente: as palavras no título, na ementa ou no resumo; as palavras raras, mais que as comuns; mais ocorrências, em proporção ao tamanho do texto; os atos citados ou alterados por muitos outros. Atrás: os de pessoal, as notificações, os termos aditivos e os outros atos de rotina dos convênios, a composição de colegiados, a seleção de consultores e a certificação de entidades, e os revogados e sem efeito; os atos quase iguais (o mesmo assunto, um por ano) ficam espaçados, sem encher o alto da lista. Ou pela data, em “Mais recentes” e “Mais antigos”.</li>
+          <li>Os resultados aparecem enquanto você digita; a última palavra entra a partir da terceira letra. Enter busca na hora.</li>
+          <li>Os filtros à esquerda valem junto com a busca, e o número ao lado de cada item conta só os atos achados.</li>
+          <li>Na frase, as palavras muito comuns (em mais de 20% dos atos, como de, do, a) só ocupam o lugar, sem conferir qual é, quando sobram duas outras: <code>"conselho nacional de assistência social"</code> acha também “conselho nacional da assistência social”.</li>
+          <li>A busca vale para o texto dos atos de 2004 em diante, como publicado no DOU. A caixa “Busca nos dados do ato”, nos filtros, procura no título, no resumo, nas palavras-chave e nas classificações.</li>
+        </ul>
+      </details>
+      <div id="active-filters" hidden></div>
+      <p id="ft-status" class="ft-status" role="status" aria-live="polite"></p>
+      <ol id="results" class="results"></ol>
+      <nav id="pager" class="pager" aria-label="Páginas dos resultados"></nav>
+    </div>
+    <div id="loading"><div class="spinner"></div><p id="loading-status" role="status">Carregando…</p></div>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

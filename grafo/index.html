@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grafo dos atos do SUAS</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // O tema salvo (src/tema.js) ou o do sistema, antes de a página aparecer: sem isso, o claro pisca ao abrir.
+    try {
+      const t = localStorage.getItem("atos-snas-grafo:theme");
+      document.documentElement.dataset.theme = t || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    } catch {}
+  </script>
+</head>
+<body>
+  <div class="proto-banner" role="note" style="flex: none; padding: 6px 14px; background: #b3261e; color: #fff; font: 700 13px/1.4 system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif; letter-spacing: 0.04em; text-align: center; position: relative; padding-right: 40px; padding-left: 40px;">PROTÓTIPO EM DESENVOLVIMENTO - NÃO USAR<button type="button" aria-label="Fechar o aviso" title="Fechar o aviso" onclick="this.parentNode.remove(); try { sessionStorage.setItem('atos-snas:proto-banner', '1'); } catch {} window.dispatchEvent(new Event('resize'));" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); padding: 0 6px; border: 0; background: none; color: inherit; font: 400 18px/1 system-ui, sans-serif; cursor: pointer;">×</button></div>
+  <!-- O aviso fechado fica fechado até o fim da sessão do navegador, em todas as páginas do site; no servidor local
+       (make serve) e no arquivo aberto do disco, ele já começa fechado. -->
+  <script>try { if (location.protocol === "file:" || /^(localhost|127\.\d+\.\d+\.\d+|\[::1\])$/.test(location.hostname)
+      || sessionStorage.getItem("atos-snas:proto-banner")) document.querySelector(".proto-banner").remove(); } catch {}</script>
+  <header>
+    <a id="home-link" class="button icon" href="../" title="Início: a página que apresenta a consulta, o leitor, o painel, o grafo e a busca" aria-label="Início">⌂</a>
+    <button id="toggle-filters" class="icon pane-toggle" title="Mostrar ou esconder os filtros (arraste a borda para mudar a largura)" aria-label="Filtros">☰</button>
+    <h1>Grafo dos atos do SUAS</h1>
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="Buscar ato ou palavra-chave (ex.: 8742, CNAS 145/2004, família acolhedora)…" autocomplete="off" spellcheck="false">
+      <ul id="search-results" hidden></ul>
+    </div>
+    <nav class="views">
+      <button data-view="full" class="active">Grafo completo</button>
+      <button data-view="ego" disabled title="Selecione um ato">Vizinhança</button>
+      <select id="hops" hidden title="Passos a partir do ato">
+        <option value="1">1 passo</option>
+        <option value="2">2 passos</option>
+      </select>
+      <button data-view="lineage" disabled title="Selecione um ato">Linhagem</button>
+      <button data-view="path" disabled title="Selecione um ato e depois o de chegada">Caminho</button>
+    </nav>
+    <select id="presets" aria-label="Filtros salvos"></select>
+    <button id="share" title="Copiar a URL desta tela: o ato selecionado, a vista e os filtros">Compartilhar</button>
+    <a id="query-link" class="button" href="../consulta/" title="Abrir os atos que passam nos filtros atuais na consulta: uma tabela, com colunas à escolha e CSV">Consulta</a>
+    <a id="reader-link" class="button" href="../leitor/" title="Abrir o leitor, no ato selecionado, se houver: o texto de cada ato, com a ficha e os atos ligados">Leitor</a>
+    <a id="bi-link" class="button" href="../bi/" title="Abrir os filtros atuais no painel: contagens por período, família, tema e unidade">Painel</a>
+    <a id="fts-link" class="button" href="../busca/" title="Buscar palavras e frases no texto integral dos atos, com os filtros atuais">Busca integral</a>
+    <span id="stats"></span>
+    <button id="toggle-side" class="icon pane-toggle" title="Mostrar ou esconder o painel (arraste a borda para mudar a largura)" aria-label="Painel">▤</button>
+    <button id="theme-btn" class="icon" title="Tema escuro" aria-label="Tema escuro">☾</button>
+    <button id="help-btn" class="icon" title="Ajuda: como usar esta página" aria-label="Ajuda">?</button>
+  </header>
+
+  <main>
+    <!-- O painel de filtros vem de comum/filtros/filtros.js (panelHtml), com as seções do grafo (src/app.js). -->
+    <aside id="filters"></aside>
+    <div class="resizer" data-resize="filters" title="Arraste para mudar a largura; duplo clique volta ao padrão"></div>
+
+    <div id="graph-wrap">
+      <div id="graph"></div>
+      <!-- Na linha do tempo, os anos e os nomes embaixo da linha (src/app.js, renderAxis e placeAxis). -->
+      <div id="axis" hidden></div>
+      <div id="top-notes">
+        <div id="view-note" hidden></div>
+        <!-- O link com o nome antigo de um ato (src/url.js): o que ele abriu e o outro ato que ele pode querer dizer. -->
+      </div>
+      <div class="zoom">
+        <button id="zoom-in" class="icon" title="Aproximar">+</button>
+        <button id="zoom-out" class="icon" title="Afastar">−</button>
+      </div>
+      <!-- No canto de baixo à esquerda: os filtros fora do padrão e, embaixo, o "Entenda o grafo" (src/destaques.js),
+           frases sobre o grafo da tela; começa fechado, só no título, e o navegador lembra a escolha. -->
+      <div id="corner-left">
+        <div id="active-filters" hidden></div>
+        <!-- Em todas as vistas, o desenho: "Grafo" ou "Linha do tempo" (src/app.js, timelineOn). -->
+        <div id="layout-toggle" role="group" aria-label="O desenho do grafo">
+          <button data-layout="graph" title="No grafo completo e na vizinhança, pela simulação de forças; na linhagem, em faixas; no caminho, um passo por coluna">Grafo</button>
+          <button data-layout="timeline" title="Todos os atos numa linha, pela data, com os nomes embaixo e as ligações em arcos por cima">Linha do tempo</button>
+          <label id="by-type" title="Uma linha para cada tipo: leis e decretos, resoluções, portarias e os outros" hidden><input type="checkbox"> por tipo</label>
+        </div>
+        <details id="highlights" hidden>
+          <summary title="Mostrar ou esconder: o que o grafo da tela mostra, em frases">Entenda o grafo</summary>
+          <div id="highlights-body"></div>
+        </details>
+      </div>
+      <button id="fit" title="Enquadrar os atos visíveis (atalho F)">⤢ Ajustar à tela</button>
+      <div id="loading"><div class="spinner"></div><p id="loading-status">Carregando…</p></div>
+    </div>
+
+    <div class="resizer" data-resize="side" title="Arraste para mudar a largura; duplo clique volta ao padrão"></div>
+    <aside id="side">
+      <div id="panel"></div>
+      <section id="workspace" hidden>
+        <h3>Área de trabalho</h3>
+        <div id="hover-card"></div>
+      </section>
+    </aside>
+  </main>
+
+  <div id="help" hidden>
+    <div class="dialog">
+      <button class="icon close" data-close title="Fechar">×</button>
+      <h2>Como usar</h2>
+      <ul>
+        <li><b>Entenda o grafo</b> (no canto de baixo à esquerda): clique no título para abrir o que o grafo da tela mostra, em poucas frases, que mudam com a vista e os filtros; passe o mouse num nome para acender o ponto, clique para selecioná-lo. Clique de novo no título para fechar; o navegador lembra.</li>
+        <li><b>Mouse sobre um ato</b>: destaca as ligações dele.</li>
+        <li><b>Clique</b>: abre os detalhes no painel à direita; clique nas listas para ir a outro ato.</li>
+        <li><b>Duplo clique</b>: aproxima o ato (na Vizinhança, recentra nele).</li>
+        <li><b>Roda do mouse / arrastar</b>: zoom e movimento.</li>
+        <li><b>Números nas listas de filtros</b>: quantos atos cada item teria com os outros filtros como estão (passe o mouse para ver o total). Em cinza, os que não teriam nenhum; marcados e em cinza, desabilitados, porque desmarcá-los não mudaria nada. O mínimo de ligações não entra nessa conta.</li>
+        <li><b>Busca simples (sem texto integral)</b>: palavras de qualquer campo de texto do ato (nome, título, família, tipo, subtipo, tema, palavras-chave, órgão, unidade, seção, origem, resumo e ementa), sem acentos; cada palavra digitada tem de começar uma palavra do ato (“refu” acha “refugiados”, “cras” não acha “democracia”). Os atos ligados aos achados aparecem em cinza, como contexto.</li>
+        <li><b>Atos (tipos)</b>: o tipo de cada ato (<code>tipo</code>), mais fino que a família de “Atos”: Extrato de Doação, Edital de Notificação, Instrução Normativa… As duas listas ficam fechadas; abra e digite para achar um item.</li>
+        <li><b>Atos (subtipos)</b>: o que o ato faz (<code>subtipo</code>), no vocabulário de cada família: Nomeação e Deferimento de certificação nas portarias, Convênio e Termo aditivo nos extratos… A lista mostra os subtipos das famílias marcadas em “Atos”, sob o nome de cada uma; a caixa acha também pela família (“portaria nome”).</li>
+        <li><b>CNPJ ou processo</b>: digite um ou mais números, com ou sem pontuação, e o processo com o ano em 2 ou 4 dígitos (<code>44005.001954/99-32</code> ou <code>/1999-32</code>), para ver os atos que os citam (<code>cnpjs</code> e <code>processos</code>); no painel, clique num número para pô-lo no filtro.</li>
+        <li><b>Consulta</b> (no alto) abre os atos que passam nos filtros numa tabela, com colunas, ordem e CSV; o mínimo de ligações e os tipos de ligação não valem lá, e a tabela lista também os atos sem ligações.</li>
+        <li><b>Leitor</b>, <b>Painel</b> e <b>Busca integral</b> (no alto): o leitor abre o ato selecionado, com o texto, a ficha e os atos ligados; a busca integral procura palavras e frases no texto dos atos, com os filtros atuais; o painel, as contagens por período, família, tema e unidade, com os mesmos filtros.</li>
+        <li><b>Filtros salvos</b> (no alto): guarde uma combinação de filtros com um nome e volte a ela depois. Valem no grafo e na consulta e ficam neste navegador; para mandar a alguém, use <b>Compartilhar</b>, que copia a URL da tela, com o ato selecionado, a vista e os filtros.</li>
+        <li><b>Links antigos</b>: a URL guarda o nome curto do ato, e alguns nomes mudaram (em 19/11/2026, os editais de notificação perderam a data do nome: “Edital nº 133/2007” é hoje “Edital de Notificação nº 133/2007”). O link com um nome antigo abre o ato de hoje; quando o nome antigo é hoje o de outro ato, abre o que tem o nome hoje, e a nota no alto oferece o outro.</li>
+        <li><b>☰</b> e <b>▤</b> (no alto) escondem os filtros e o painel; arraste a borda de cada um para mudar a largura (duplo clique volta ao padrão).</li>
+        <li><kbd>/</kbd> busca (fora das caixas de texto), <kbd>F</kbd> ajusta à tela os atos visíveis, <kbd>Esc</kbd> desfaz a seleção ou volta ao grafo completo.</li>
+        <li>Ao mudar um filtro, o grafo se ajusta à tela sozinho; depois de aproximar e mover, <b>Ajustar à tela</b> volta a mostrar tudo o que está visível.</li>
+      </ul>
+      <h3>Vistas</h3>
+      <ul>
+        <li><b>Grafo completo</b>: todos os atos, com a posição calculada uma vez (ForceAtlas2).</li>
+        <li><b>Vizinhança</b>: o ato selecionado e os ligados a ele, a 1 ou 2 passos, em qualquer sentido.</li>
+        <li><b>Linhagem</b>: as mudanças (altera, revoga, dá nova redação, retifica) ligadas ao ato, em linha do tempo, pela data de publicação. O ato sem ela entra pela data do título (a da assinatura, marcada “do título”); o que não tem data nenhuma fica à direita, fora da linha do tempo. Mostra todas as mudanças, com qualquer tipo de ligação marcado, mas só pelos atos que passam nos filtros: a nota do alto diz quantos ficaram de fora, e a caixa “Considerar os filtros de atos”, nela, liga e desliga os filtros na linhagem e no caminho. No canto de baixo, em cima do “Entenda o grafo”, o desenho: <b>Grafo</b>, em faixas, ou <b>Linha do tempo</b>, com todos os atos numa linha só, os anos e os nomes embaixo e cada mudança num arco por cima. O mesmo toggle vale nas outras vistas.</li>
+        <li><b>Caminho</b>: com um ato selecionado, clique em <b>Caminho</b> (ou em “Caminho até…”, no painel) e escolha outro ato, na busca, no grafo ou no painel. Aparecem todos os caminhos mais curtos entre os dois, juntos: o menor número de ligações para ir de um ao outro, em qualquer sentido, pelos tipos de ligação marcados e pelos atos que passam nos filtros (as duas pontas valem sempre). Os filtros padrão (de 2018 em diante, sem os atos citados fora do escopo) cortam muitos caminhos: a nota do alto diz o que haveria sem eles, e a caixa “Considerar os filtros de atos”, nela, liga e desliga os filtros no caminho e na linhagem. Passe o mouse num ato do meio para ver só os caminhos que passam por ele. Quando um passo tem atos demais (dois atos muito citados, como a Lei nº 12.101/2009 e o Decreto nº 2.536/1998, têm mais de mil atos em comum), ficam os 40 por onde passam mais caminhos.</li>
+        <li>O <b>mínimo de ligações</b> vale só no grafo completo: na vizinhança, na linhagem e no caminho, fica apagado.</li>
+      </ul>
+      <h3>A posição dos pontos</h3>
+      <ul>
+        <li><b>No grafo completo</b>, a posição sai de uma simulação: os pontos se repelem, e cada ligação puxa os dois atos
+        um para o outro, como um elástico (as mudanças puxam mais forte, e as de mesmo processo também puxam). Por isso atos
+        ligados entre si, ou ligados aos mesmos atos, tendem a ficar próximos, e cada aglomerado é um conjunto de atos muito
+        ligados, quase sempre do mesmo assunto. É uma tendência, e não uma regra: dois pontos vizinhos podem não ter
+        ligação nenhuma, e para saber quem se liga a quem é preciso seguir as linhas. Só a distância importa: estar mais à
+        esquerda ou mais acima não quer dizer nada, e o desenho poderia estar girado ou espelhado.</li>
+        <li>As posições são calculadas uma vez, com todos os atos e todas as ligações, e não mudam com os filtros: dois
+        pontos podem estar perto por causa de atos que o filtro escondeu. Os atos sem nenhuma ligação ficam numa espiral
+        em volta do desenho, do mais antigo ao mais novo, pela data de publicação ou, sem ela, pela do título (só aparecem
+        com o mínimo de ligações em 0).</li>
+        <li><b>Na Vizinhança</b>, a mesma simulação roda na hora, só com os atos da vizinhança, e o ato do centro fica preso
+        no meio: os ligados direto a ele tendem a ficar mais perto. Com só dois atos, não há simulação: o vizinho fica ao
+        lado do centro.</li>
+        <li><b>Na Linhagem</b>, a horizontal é o tempo, pela data de publicação ou, sem ela, pela do título (marcada “do
+        título”); os atos sem data nenhuma ficam à direita, fora da linha do tempo. No desenho “Grafo”, a altura só separa os nomes;
+        na “Linha do tempo”, os atos de datas muito próximas se afastam um pouco, e o arco de uma mudança é mais alto quanto mais
+        tempo há entre os dois atos. Os nomes ficam embaixo, inclinados; quando não cabem todos, aparecem os que cabem,
+        e os outros com o zoom.</li>
+        <li><b>No Caminho</b>, no desenho “Grafo”, a horizontal são os passos: o ato de partida à esquerda, o de chegada à direita, e em cada coluna os atos à mesma distância da partida; a altura só separa os nomes. Na “Linha do tempo”, a horizontal é o tempo, como na linhagem, e cada arco é um passo; o número em cima de cada ato diz em que passo ele está, de 0, na partida, até a chegada, e a seta de cada arco diz quem cita (ou muda) quem. Passe o mouse num ato para ver só os nomes e os números dos caminhos que passam por ele. Com <b>por tipo</b>, ao lado do toggle, cada tipo tem a sua linha, de cima para baixo: leis e decretos, resoluções, portarias e os outros; a data é a mesma em todas, e um arco de uma linha a outra é um passo entre atos de tipos diferentes.</li>
+        <li><b>A “Linha do tempo”</b>, no canto de baixo, em cima do “Entenda o grafo”, vale em todas as vistas. No grafo
+        completo e na vizinhança, no lugar da simulação, os atos ficam numa linha pela data, com os anos e os nomes
+        embaixo e cada ligação num arco por cima; no grafo completo, os filtros escondem atos, como no desenho “Grafo”, e
+        os nomes que não cabem aparecem com o zoom. Com <b>por tipo</b>, uma linha por tipo, como no caminho.</li>
+      </ul>
+      <h3>Ligações</h3>
+      <ul>
+        <li><b>Cita</b> (lei ou decreto, resolução, portaria): o texto de um ato menciona o outro.</li>
+        <li><b>Muda</b>: um ato altera, revoga, dá nova redação ou retifica o outro (as linhas vermelhas).</li>
+        <li><b>Mesmo processo</b>: os dois atos citam o mesmo número de processo administrativo (NUP); cada um se liga ao
+        anterior do mesmo processo, e a seta vai do publicado depois para o anterior (sem data de publicação, vale a do
+        título; no mesmo dia, a ordem é a dos nomes, e a seta não diz qual veio antes). Quando uma retificação corrige o
+        número, a ligação usa o certo. Essa ligação não é citação e não aumenta o tamanho do ponto.</li>
+        <li>No cartão do ato e nas listas “Cita” e “Citado por” do painel, as mudanças também contam como citações: a
+        retificação que só muda um ato está em “Cita”, e o tamanho do ponto cresce com os atos que o citam ou mudam, até um
+        limite.</li>
+      </ul>
+      <p>Os editais e os extratos formam grupos à parte. Quase todo edital cita algum ato, em geral a Lei nº 9.784/1999 (a
+      do processo administrativo); dos extratos, poucos citam ou mudam outro ato, mas cerca de metade tem alguma ligação,
+      quase sempre a de mesmo processo, em geral com outro extrato do mesmo processo. Os extratos começam desmarcados em
+      “Atos”. O tema de
+      cada ato é dado automaticamente, por regras sobre o tipo, o título, o resumo e o começo do texto; a retificação e a
+      republicação de um ato só ficam com o tema dele, e alguns atos sem regra herdam o tema dos atos que mudam. Os atos citados que não estão no sistema (como as leis citadas por outras
+      leis) aparecem como “Citados fora do escopo”.</p>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

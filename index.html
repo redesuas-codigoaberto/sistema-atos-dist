@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atos Normativos do SUAS</title>
+  <link rel="icon" href="data:,">
+  <!-- A página da raiz do site: a busca no texto integral logo no alto e os sites de cada subpasta (busca/, consulta/,
+       leitor/, bi/ e grafo/) pela tarefa de quem chega. O estilo e o tema vêm de comum/ (src/style.css e
+       src/app.js, que o esbuild junta em style.css e app.js). -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // O tema salvo (comum/tema.js, a mesma chave do grafo, do leitor e da consulta) ou o do sistema, antes de a
+    // página aparecer: sem isso, o claro pisca ao abrir.
+    try {
+      const t = localStorage.getItem("atos-snas-grafo:theme");
+      document.documentElement.dataset.theme = t || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    } catch {}
+  </script>
+</head>
+<body>
+  <div class="proto-banner" role="note" style="flex: none; padding: 6px 14px; background: #b3261e; color: #fff; font: 700 13px/1.4 system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif; letter-spacing: 0.04em; text-align: center; position: relative; padding-right: 40px; padding-left: 40px;">PROTÓTIPO EM DESENVOLVIMENTO - NÃO USAR<button type="button" aria-label="Fechar o aviso" title="Fechar o aviso" onclick="this.parentNode.remove(); try { sessionStorage.setItem('atos-snas:proto-banner', '1'); } catch {} window.dispatchEvent(new Event('resize'));" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); padding: 0 6px; border: 0; background: none; color: inherit; font: 400 18px/1 system-ui, sans-serif; cursor: pointer;">×</button></div>
+  <!-- O aviso fechado fica fechado até o fim da sessão do navegador, em todas as páginas do site; no servidor local
+       (make serve) e no arquivo aberto do disco, ele já começa fechado. -->
+  <script>try { if (location.protocol === "file:" || /^(localhost|127\.\d+\.\d+\.\d+|\[::1\])$/.test(location.hostname)
+      || sessionStorage.getItem("atos-snas:proto-banner")) document.querySelector(".proto-banner").remove(); } catch {}</script>
+  <header>
+    <h1>Atos Normativos do SUAS</h1>
+    <nav aria-label="Sites">
+      <a class="button" href="consulta/">Consulta</a>
+      <a class="button" href="leitor/">Leitor</a>
+      <a class="button" href="bi/">Painel</a>
+      <a class="button" href="grafo/">Grafo</a>
+      <a class="button" href="busca/">Busca integral</a>
+    </nav>
+    <span class="spacer"></span>
+    <button id="share" title="Copiar a URL desta página">Compartilhar</button>
+    <button id="theme-btn" class="icon" title="Tema escuro" aria-label="Tema escuro">☾</button>
+  </header>
+
+  <main>
+    <div class="page">
+      <section class="hero">
+        <h2>Busque, leia e analise os atos do Sistema Único de Assistência Social</h2>
+        <p class="lede">Aqui você encontra o texto integral dos atos da Secretaria Nacional de Assistência Social
+          publicados no Diário Oficial da União desde 2004, das resoluções do CNAS desde 1994 e das leis e decretos que
+          esses atos citam.</p>
+
+        <!-- Sem o app.js, o formulário abre a busca vazia; com ele, leva o texto digitado (busca/#ft=…). -->
+        <form id="hero-search" class="hero-search" action="busca/" role="search">
+          <label for="hero-ft" class="visually-hidden">Buscar no texto integral dos atos</label>
+          <svg class="hero-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg>
+          <input id="hero-ft" type="search" autocomplete="off" spellcheck="false"
+            placeholder="Ex.: acolhimento institucional, &quot;proteção social básica&quot;, refugi*">
+          <button type="submit">Buscar</button>
+        </form>
+        <p class="hint">Use aspas para frases, <code>*</code> para o começo de uma palavra e <code>-</code> para excluir
+          uma palavra.</p>
+        <!-- Preenchido pelo app.js com busca/meta.json; fica escondido se o arquivo não vier. -->
+        <p id="facts" class="facts" hidden></p>
+      </section>
+
+      <section class="tasks" aria-labelledby="tasks-title">
+        <h3 id="tasks-title">O que você precisa fazer?</h3>
+        <div class="task-grid">
+          <a class="task primary fts" href="busca/">
+            <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg></span>
+            <h4>Achar os atos que tratam de um assunto</h4>
+            <p>Busque palavras e frases em qualquer parte do texto e veja os trechos em que elas aparecem.</p>
+            <span class="cta">Abrir a busca integral →</span>
+          </a>
+
+          <a class="task primary query" href="consulta/">
+            <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></svg></span>
+            <h4>Listar atos e baixar a lista</h4>
+            <p>Filtre por tipo, tema, órgão e período, escolha as colunas e baixe a tabela em CSV.</p>
+            <span class="cta">Abrir a consulta →</span>
+          </a>
+
+          <a class="task reader" href="leitor/">
+            <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h7"/></svg></span>
+            <h4>Ler um ato e as referências dele</h4>
+            <p>Leia o texto integral, abra lado a lado os atos citados e veja as alterações que ele faz e as que sofre.</p>
+            <span class="cta">Abrir o leitor →</span>
+          </a>
+
+          <a class="task bi" href="bi/">
+            <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16M7 16v-4M12 16V7M17 16v-7"/></svg></span>
+            <h4>Ver os números dos atos</h4>
+            <p>Veja os atos por ano, tema e unidade, as portarias, as resoluções da CIT e do CNAS e o CEBAS; cada número leva à lista dos atos.</p>
+            <span class="cta">Abrir o painel →</span>
+          </a>
+
+          <a class="task graph" href="grafo/">
+            <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 7 8 1.5M7.5 8.5l2 7.5M16.5 10l-5.5 6.5"/><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="8" r="2.5"/><circle cx="10" cy="18" r="2.5"/></svg></span>
+            <h4>Ver as ligações entre os atos</h4>
+            <p>Cada ato é um ponto, e cada citação ou alteração, uma linha. Siga a cadeia de alterações de uma norma.</p>
+            <span class="cta">Abrir o grafo →</span>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <footer class="site-footer">
+      <div class="page">
+        <p>Fontes: Diário Oficial da União, Conselho Nacional de Assistência Social e normas.leg.br.
+          <a href="bi/#aba=sobre">Sobre os dados</a></p>
+      </div>
+    </footer>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

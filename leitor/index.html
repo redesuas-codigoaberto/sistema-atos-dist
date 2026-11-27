@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leitor dos atos do SUAS</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // O tema salvo ou o do sistema, antes de a página aparecer: sem isso, o claro pisca ao abrir. A chave é a mesma
+    // do grafo (grafo/src/tema.js): o tema escolhido num vale no outro.
+    try {
+      const t = localStorage.getItem("atos-snas-grafo:theme");
+      document.documentElement.dataset.theme = t || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    } catch {}
+  </script>
+</head>
+<body>
+  <div class="proto-banner" role="note" style="flex: none; padding: 6px 14px; background: #b3261e; color: #fff; font: 700 13px/1.4 system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif; letter-spacing: 0.04em; text-align: center; position: relative; padding-right: 40px; padding-left: 40px;">PROTÓTIPO EM DESENVOLVIMENTO - NÃO USAR<button type="button" aria-label="Fechar o aviso" title="Fechar o aviso" onclick="this.parentNode.remove(); try { sessionStorage.setItem('atos-snas:proto-banner', '1'); } catch {} window.dispatchEvent(new Event('resize'));" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); padding: 0 6px; border: 0; background: none; color: inherit; font: 400 18px/1 system-ui, sans-serif; cursor: pointer;">×</button></div>
+  <!-- O aviso fechado fica fechado até o fim da sessão do navegador, em todas as páginas do site; no servidor local
+       (make serve) e no arquivo aberto do disco, ele já começa fechado. -->
+  <script>try { if (location.protocol === "file:" || /^(localhost|127\.\d+\.\d+\.\d+|\[::1\])$/.test(location.hostname)
+      || sessionStorage.getItem("atos-snas:proto-banner")) document.querySelector(".proto-banner").remove(); } catch {}</script>
+  <header>
+    <a id="home-link" class="button icon" href="../" title="Início: a página que apresenta a consulta, o leitor, o painel, o grafo e a busca" aria-label="Início">⌂</a>
+    <h1>Leitor dos atos do SUAS</h1>
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="Buscar ato (ex.: 8742, CNAS 145/2004, 2015-01-02, extrato Guararapes)… ( / )" autocomplete="off" spellcheck="false">
+      <ul id="search-results" hidden></ul>
+    </div>
+    <span id="status"></span>
+    <button id="share" title="Copiar a URL desta tela: o ato, o dispositivo em destaque, a versão do texto e a quarta coluna">Compartilhar</button>
+    <a id="query-link" class="button" href="../consulta/" title="Abrir a consulta: os atos numa tabela, com filtros, colunas à escolha e CSV">Consulta</a>
+    <a id="bi-link" class="button" href="../bi/" title="Abrir o painel dos atos: contagens por período, família, tema e unidade">Painel</a>
+    <a id="graph-link" class="button" href="../grafo/" title="Abrir este ato no grafo dos atos">Grafo</a>
+    <a id="fts-link" class="button" href="../busca/" title="Buscar palavras e frases no texto integral dos atos">Busca integral</a>
+    <button id="toggle-meta" class="icon" title="Mostrar ou esconder a coluna da ficha" aria-label="Ficha">☰</button>
+    <button id="toggle-links" class="icon" title="Mostrar ou esconder a coluna dos atos ligados" aria-label="Ligados">⛓</button>
+    <button id="theme-btn" class="icon" title="Tema escuro" aria-label="Tema escuro">☾</button>
+    <button id="help-btn" class="icon" title="Ajuda: como usar esta página" aria-label="Ajuda">?</button>
+  </header>
+
+  <main id="columns">
+    <section id="col-meta" class="col"><div class="empty">Busque um ato na barra do alto.</div></section>
+    <section id="col-text" class="col">
+      <div class="col-bar">
+        <input id="find" type="search" placeholder="Localizar no texto…" autocomplete="off" spellcheck="false">
+        <span id="find-count"></span>
+        <button id="find-prev" class="icon small" title="Anterior (Shift+Enter)" hidden>↑</button>
+        <button id="find-next" class="icon small" title="Seguinte (Enter)" hidden>↓</button>
+        <span class="spacer"></span>
+        <span id="version-toggle" class="segmented" hidden title="O texto original, como publicado; o marcado, com as mudanças e as redações anteriores riscadas (como o Portal da Legislação); ou o consolidado, só com a redação atual"><button class="seg" data-v="o">Original</button><button class="seg" data-v="m">Marcado</button><button class="seg" data-v="c">Consolidado</button></span>
+        <span id="prov-chip" hidden><button id="prov-chip-go" title="Ir ao dispositivo em destaque"></button><button id="prov-chip-clear" title="Tirar o destaque (Esc)">×</button></span>
+        <button id="font-down" class="icon small" title="Letra menor">A−</button>
+        <button id="font-up" class="icon small" title="Letra maior">A+</button>
+      </div>
+      <article id="text" class="doc"></article>
+    </section>
+    <section id="col-links" class="col"></section>
+    <section id="col-panel" class="col idle"></section>
+  </main>
+
+  <dialog id="help">
+    <h2>Leitor dos atos</h2>
+    <p>Cada ato de <code>dados/</code> em colunas: a <b>ficha</b> (os metadados), o <b>texto</b> integral e os
+      <b>atos ligados</b> (os que ele cita, os que ele altera e os que o citam ou alteram). O que se clica abre na
+      quarta coluna, que se troca a cada clique; o botão <b>voltar</b> do navegador desfaz a troca.</p>
+    <ul>
+      <li>No texto, as citações dos atos ligados ficam sublinhadas: clique para abrir o ato citado ao lado.</li>
+      <li>Passe o mouse sobre um ato ligado para ver onde o texto o cita; ⇣ leva à primeira citação.</li>
+      <li>Na ficha, o tema, o subtipo, as palavras-chave, os CNPJs e os processos abrem a lista dos atos que os têm.</li>
+      <li><b>Tornar principal</b> leva o ato da quarta coluna para o centro.</li>
+      <li><b>⏱ Painel de mudanças</b> (no ato que mudou outros ou foi mudado): a linha do tempo das mudanças, com o
+        verbo, o trecho e o “onde se lê … leia-se” marcado palavra a palavra.</li>
+      <li>Um CNPJ ou processo tem página própria: <b>Abrir página</b>, na lista dele, ou a busca do alto com o número
+        (8 dígitos ou mais). Ela mostra cada ato que cita o número, com o trecho.</li>
+      <li>As listas de atos trazem o resumo (ou a ementa) de cada ato sob o nome; a caixa <b>Mostrar resumos</b>, acima
+        delas, os esconde. A escolha fica salva no navegador e vale também no grafo.</li>
+      <li>Cada dispositivo (artigo, parágrafo, inciso, alínea, item) tem um botão <b>§</b> na margem, ao passar o
+        mouse: <b>Copiar link</b> (a URL abre o ato com o dispositivo em destaque), <b>Copiar citação</b> (“art. 18,
+        inciso II, da Lei nº 8.742/1993”) e, nas leis e decretos mudados depois, a <b>redação atual</b> no Portal da
+        Legislação: o texto do leitor é o original.</li>
+      <li>A citação de um dispositivo de outro ato (“art. 24 da Lei nº 12.101”) abre o ato citado nele, em destaque.</li>
+      <li>Os atos com 15 artigos ou mais têm o <b>Sumário</b> na ficha: os capítulos, as seções e os artigos. O
+        dispositivo em destaque aparece na barra do texto; o <b>×</b> ao lado, um novo clique no sumário ou
+        <kbd>Esc</kbd> tiram o destaque.</li>
+      <li>Na lei, no decreto, na resolução ou na portaria que outros atos mudaram, <b>Original | Marcado | Consolidado</b>,
+        na barra do texto, troca o texto: o marcado, que abre primeiro (as mudanças dos atos do sistema, com as redações
+        anteriores riscadas, como no Portal da Legislação), o consolidado (só a redação atual) ou o original, como
+        publicado; cada mudança traz a nota (“Redação dada pela …”). Não é o texto oficial, e pode faltar mudança de ato que não
+        está no sistema; nas leis do SUAS, o aviso no alto diz quanto ele confere com o texto compilado do Planalto.</li>
+      <li>A URL guarda o ato, a versão do texto, o dispositivo e a quarta coluna: dá para compartilhá-la.</li>
+    </ul>
+    <p>Atalhos: <kbd>/</kbd> busca, <kbd>Esc</kbd> fecha a quarta
+      coluna (e, com ela fechada, tira o destaque do dispositivo); a caixa “Localizar no texto” acha e conta um trecho no texto do ato.</p>
+    <form method="dialog"><button>Fechar</button></form>
+  </dialog>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
